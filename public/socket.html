@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Word Counter</title>
+	<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+
+	.results{
+
+		height: 100px;
+	}
+	</style>
+</head>
+<body>
+<div class="welcomeDiv"></div>
+<input type="text" id="inputText"></input>
+<button class="btn btn-primary btn-xs textSend">Search Text</button>
+<div class="results"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script>
+	$(document).ready(function(){
+			var socket = io.connect();
+
+			socket.on('connDone', function(data){
+				$(".welcomeDiv").html(data.message);
+
+			});
+			$(".textSend").click(function(){
+				var textVal = $("#inputText").val();
+				console.log("Clicked on the sendText button.."+textVal);				
+				socket.emit('myMess', textVal);
+
+			});
+			socket.on('report', function(data){
+
+				_.each(data, function(value, key){
+					$(".results").append(key+"-->>"+value+"\n");
+				});
+
+			});
+	});
+</script>
+</body>
+</html>

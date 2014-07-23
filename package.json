@@ -1,0 +1,8 @@
+{
+	"name": "WordCounter",
+	"version": "0.0.1",
+	"description": "This file counts the number of times a word is present in list of files..",
+	"devDependencies":{
+		"socket.io": "1.0.6"
+	}
+}
